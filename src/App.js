@@ -1,17 +1,16 @@
-
 import React, { useEffect } from "react";
 import SpotifyWebApi from "spotify-web-api-js";
-import { useStateValue } from "./StateProvider";
-import Player from "./Player";
-import { getTokenFromResponse } from "./spotify";
 import "./App.css";
 import Login from "./Login";
+import Player from "./Player";
+import { getTokenFromResponse } from "./spotify";
+import { useStateValue } from "./StateProvider";
+import { Container } from "@mui/material";
 
 const s = new SpotifyWebApi();
 
 function App() {
   const [{ token }, dispatch] = useStateValue();
-z
   useEffect(() => {
     // Set token
     const hash = getTokenFromResponse();
@@ -63,8 +62,10 @@ z
 
   return (
     <div className="app">
-      {!token && <Login />}
-      {token && <Player spotify={s} />}
+      <Container maxWidth={"xxl"}>
+        {!token && <Login />}
+        {token && <Player spotify={s} />}
+      </Container>
     </div>
   );
 }
