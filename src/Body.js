@@ -16,6 +16,7 @@ function Body({ spotify }) {
         context_uri: `spotify:playlist:37i9dQZEVXcJZyENOWUFo7`,
       })
       .then((res) => {
+        console.log(res);
         spotify.getMyCurrentPlayingTrack().then((r) => {
           dispatch({
             type: "SET_ITEM",
@@ -30,21 +31,27 @@ function Body({ spotify }) {
   };
 
   const playSong = (id) => {
+    console.log(`Playing song with ID: ${id}`);
     spotify
       .play({
         uris: [`spotify:track:${id}`],
       })
       .then((res) => {
-        spotify.getMyCurrentPlayingTrack().then((r) => {
-          dispatch({
-            type: "SET_ITEM",
-            item: r.item,
-          });
-          dispatch({
-            type: "SET_PLAYING",
-            playing: true,
-          });
+        console.log("Playback response:", res);
+        return spotify.getMyCurrentPlayingTrack();
+      })
+      .then((r) => {
+        dispatch({
+          type: "SET_ITEM",
+          item: r.item,
         });
+        dispatch({
+          type: "SET_PLAYING",
+          playing: true,
+        });
+      })
+      .catch((error) => {
+        console.error("Error playing track:", error);
       });
   };
 

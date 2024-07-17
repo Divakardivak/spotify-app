@@ -14,6 +14,7 @@ function App() {
   useEffect(() => {
     // Set token
     const hash = getTokenFromResponse();
+    console.log(hash);
     window.location.hash = "";
     let _token = hash.access_token;
 
